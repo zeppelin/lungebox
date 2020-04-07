@@ -1,0 +1,9 @@
+{{#each @exercises as |exercise|}}
+  <LinkTo
+    data-test-exercise={{exercise.id}}
+    @route="exercise"
+    @model={{exercise.id}}
+  >
+    {{exercise.name}}
+  </LinkTo>
+{{/each}}
