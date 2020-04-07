@@ -10,8 +10,8 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": false, // Convered by ESLint
+    "noUnusedParameters": false, // Convered by ESLint
     "noImplicitReturns": true,
     "noEmitOnError": false,
     "noEmit": true,
