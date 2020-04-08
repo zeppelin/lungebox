@@ -2,7 +2,7 @@
 
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
@@ -11,17 +11,50 @@ module.exports = {
     }
   },
   plugins: [
-    'ember'
+    '@typescript-eslint',
+    'ember',
+    'ember-suave'
   ],
   extends: [
     'eslint:recommended',
-    'plugin:ember/recommended'
+    'plugin:@typescript-eslint/recommended',
+    'plugin:ember/recommended',
+    'plugin:ember-suave/recommended'
   ],
   env: {
     browser: true
   },
   rules: {
-    'ember/no-jquery': 'error'
+    'ember/no-jquery': 'error',
+
+    'lines-between-class-members': ['error', 'always', {
+      'exceptAfterSingleLine': true
+    }],
+
+    'ember-suave/lines-between-object-properties': 0,
+
+    // This would fail when enabled for imports from type declarations
+    'no-unused-vars': 0,
+    // This one is much better
+    '@typescript-eslint/no-unused-vars': ['error', { 'vars': 'all', 'args': 'none' }],
+
+    // Conflicting rule with ember-suve
+    'prefer-const': 0,
+
+    // Allow template literals without interpolated expression. (ex. `foo`)
+    // Hand for test case descriptions that have apostrophes in them.
+    'quotes': ['error', 'single', { 'allowTemplateLiterals': true }],
+
+    // Allow snake_case variable access using bracket notation.
+    'dot-notation': ['error', { 'allowPattern': '^[a-z]+(_[a-z]+)+$' }],
+
+    // Require parens only for multiple arguments for arrow functions.
+    // Ex. arg => {...} instead of (arg) => {...}
+    'arrow-parens': ['error', 'as-needed', { 'requireForBlockBody': true }],
+
+    '@typescript-eslint/explicit-function-return-type': 0,
+    '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/no-empty-function': 'warn'
   },
   overrides: [
     // node files
