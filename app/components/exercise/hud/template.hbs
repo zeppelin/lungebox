@@ -1,0 +1,19 @@
+<div
+  class={{concat
+    (if this.isHidden " opacity-0 " " opacity-25 ")
+    "fixed inset-0 bg-black transition-opacity duration-500 ease-in-out"
+  }}
+></div>
+<div
+  class={{concat
+    (if this.isHidden " opacity-0 ")
+    "fixed inset-0 transition-opacity duration-500 ease-in-out"
+  }}
+  {{did-insert (perform this.hideAfterTimeout)}}
+  {{did-insert this.attachEventListener}}
+  {{will-destroy this.removeEventListener}}
+>
+  <button type="button" {{on "click" @onPause}}>
+    Pause
+  </button>
+</div>

@@ -1,10 +1,11 @@
 import Route from '@ember/routing/route';
+import { inject } from '@ember/service';
+import ExerciseService from 'lungebox/services/exercise';
 
 export default class Index extends Route {
+  @inject exercise!: ExerciseService;
+
   model() {
-    return [{
-      id: '1',
-      name: 'Exercise 1'
-    }];
+    return this.exercise.fetch();
   }
 }

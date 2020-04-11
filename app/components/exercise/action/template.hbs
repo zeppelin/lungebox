@@ -1,3 +1,11 @@
-<div style={{this.style}} class="text-white">
-  {{@action.title}}
-</div>
+{{#let (concat "bg-" @action.color "-500") as |bgClass|}}
+  <div
+    class="{{bgClass}} fixed inset-0 flex items-center justify-center"
+    {{did-insert this.attachEventListener}}
+    {{will-destroy this.removeEventListener}}
+  >
+    <div class="text-white text-6xl font-bold">
+      {{@action.title}}
+    </div>
+  </div>
+{{/let}}

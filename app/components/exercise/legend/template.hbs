@@ -1,0 +1,9 @@
+<div class="flex -mx-1">
+  {{#each this.actions as |action|}}
+    <div class="flex-1 flex px-1">
+      <div class="{{action.bgClass}} flex-1 h-24 p-2 text-white rounded">
+        {{action.title}}
+      </div>
+    </div>
+  {{/each}}
+</div>

@@ -1,29 +1,49 @@
-<h2 data-test-exercise-title>
-  {{this.exercise.title}}
-</h2>
+<div class="lg:w-1/2 mx-auto">
+  <div class="flex items-center">
+    <h2 data-test-exercise-title class="my-8 text-2xl text-gray-800">
+      {{this.exercise.title}}
+    </h2>
 
-<button
-  data-test-play-button
-  type="button"
-  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-  {{on "click" this.play}}
->
-  Play
-</button>
+    <div class="ml-auto">
+      {{#if this.run.isRunning}}
+        <button
+          type="button"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          data-test-pause-button
+          {{on "click" this.pause}}
+        >
+          {{#if this.paused}}
+            Resume
+          {{else}}
+            Pause
+          {{/if}}
+        </button>
+      {{else}}
+        <button
+          data-test-play-button
+          type="button"
+          class="py-2 px-4 rounded bg-light-blue-vivid-050 text-light-blue-vivid-800 font-bold"
+          {{on "click" this.play}}
+        >
+          Play
+        </button>
+      {{/if}}
+    </div>
+  </div>
 
-{{#if this.loop.isRunning}}
-  <button
-    type="button"
-    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-    data-test-pause-button
-    {{on "click" this.pause}}
-  >
-    {{#if this.paused}}
-      Resume
-    {{else}}
-      Pause
-    {{/if}}
-  </button>
+  <Exercise::Timeline @actions={{this.exercise.actions}} class="mb-4" />
+  <Exercise::Legend @actions={{this.exercise.actions}} />
 
-  <Exercise::Action @action={{this.action}} />
-{{/if}}
+  {{#if this.run.isRunning}}
+    <Exercise::Action
+      @action={{this.action}}
+      @onDismiss={{cancel-all this.run}}
+    />
+
+    <Exercise::Hud
+      @isPaused={{this.run.isRunning}}
+      @onPause={{this.pause}}
+      @onStop={{cancel-all this.run}}
+    />
+  {{/if}}
+</div>
