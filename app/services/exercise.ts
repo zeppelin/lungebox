@@ -1,7 +1,8 @@
 import Service from '@ember/service';
+import { Exercise } from 'lungebox/models/exercise';
 
 export default class ExerciseService extends Service {
-  fetch() {
+  fetch(): Promise<Exercise[]> {
     return Promise.resolve([{
       id: '1',
       title: 'Exercise 1',
