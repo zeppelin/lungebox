@@ -3,8 +3,9 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { arg } from 'ember-arg-types';
 import { restartableTask } from 'ember-concurrency-decorators';
+import { taskFor } from 'ember-concurrency-ts';
 import { Action, Exercise } from 'lungebox/models/exercise';
-import { taskFor, timeout } from 'lungebox/utils/ember-concurrency';
+import { timeout } from 'lungebox/utils/ember-concurrency';
 import { object } from 'prop-types';
 
 export default class ExerciseComponent extends Component {
@@ -25,19 +26,19 @@ export default class ExerciseComponent extends Component {
     this.paused = !this.paused;
   }
 
-  @restartableTask* run() {
-    yield taskFor(this.countdown).perform();
+  @restartableTask async run() {
+    await taskFor(this.countdown).perform();
 
     let i = 2;
     while (i--) {
-      yield taskFor(this.loop).perform();
+      await taskFor(this.loop).perform();
     }
   }
 
-  @restartableTask* loop() {
+  @restartableTask async loop() {
     for (let action of this.exercise.actions) {
       while (this.paused) {
-        yield timeout(100);
+        await timeout(100);
       }
 
       if (action.type === 'multi') {
@@ -47,18 +48,18 @@ export default class ExerciseComponent extends Component {
       this.action = action;
       let duration = this.getDuration(action.min, action.max);
 
-      yield timeout(duration * 1000);
+      await timeout(duration * 1000);
     }
 
     this.action = {};
   }
 
-  @restartableTask* countdown() {
+  @restartableTask async countdown() {
     let i = 10;
 
     while (i--) {
       while (this.paused) {
-        yield timeout(100);
+        await timeout(100);
       }
 
       this.action = {
@@ -66,7 +67,7 @@ export default class ExerciseComponent extends Component {
         color: 'teal'
       };
 
-      yield timeout(1000);
+      await timeout(1000);
     }
   }
 

@@ -2,7 +2,8 @@ import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency-decorators';
-import { taskFor, timeout } from 'lungebox/utils/ember-concurrency';
+import { taskFor } from 'ember-concurrency-ts';
+import { timeout } from 'lungebox/utils/ember-concurrency';
 
 const FADE_TIMEOUT = 1000;
 
@@ -13,8 +14,8 @@ export default class extends Component<{
 }> {
   @tracked isHidden = true;
 
-  @restartableTask* hideAfterTimeout() {
-    yield timeout(FADE_TIMEOUT);
+  @restartableTask async hideAfterTimeout() {
+    await timeout(FADE_TIMEOUT);
 
     this.isHidden = true;
   }
