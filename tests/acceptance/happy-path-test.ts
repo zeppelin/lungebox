@@ -1,11 +1,17 @@
 import { click, visit, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { module, test } from 'qunit';
+import sinon from 'sinon';
+
+import { exerciseData } from './happy-path-helpers';
 
 module('Acceptance | happy path', function(hooks) {
   setupApplicationTest(hooks);
 
   test('everything works so far', async function(assert) {
+    let exerciseService = this.owner.lookup('service:exercise');
+    sinon.stub(exerciseService, 'fetch').resolves(exerciseData);
+
     await visit('/');
 
     assert.dom('[data-test-exercise="1"]').hasText('Exercise 1');

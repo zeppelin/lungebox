@@ -1,6 +1,7 @@
 export interface Exercise {
   id: string;
   title: string;
+  repeat?: Repeat;
   actions: Action[];
 }
 
@@ -16,9 +17,13 @@ export interface SingleAction extends AbstractAction {
 
 export interface MultiAction extends AbstractAction {
   type: 'multi';
-  items: Action[];
+  items: SingleAction[];
 }
 
 interface AbstractAction {
   type: 'single' | 'multi';
+}
+
+export enum Repeat {
+  Infinite = 'infinite',
 }

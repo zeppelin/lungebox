@@ -8,6 +8,7 @@ import { timeout } from 'lungebox/utils/ember-concurrency';
 const FADE_TIMEOUT = 1000;
 
 export default class extends Component<{
+  isRunning: boolean;
   isPaused: boolean;
   onPause(): void;
   onStop(): void;
@@ -31,7 +32,7 @@ export default class extends Component<{
   @action attachEventListener() {
     this._keyboardEventCallback = (event) => {
       if (event.key === 'Escape') {
-        if (this.args.isPaused) {
+        if (this.args.isRunning) {
           this.args.onStop();
         } else {
           this.show();

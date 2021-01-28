@@ -4,9 +4,21 @@ import { tracked } from '@glimmer/tracking';
 import { arg } from 'ember-arg-types';
 import { restartableTask } from 'ember-concurrency-decorators';
 import { taskFor } from 'ember-concurrency-ts';
-import { Action, Exercise } from 'lungebox/models/exercise';
+import ENV from 'lungebox/config/environment';
+import {
+  Action,
+  Exercise,
+  MultiAction,
+  Repeat,
+  SingleAction
+} from 'lungebox/models/exercise';
 import { timeout } from 'lungebox/utils/ember-concurrency';
 import { object } from 'prop-types';
+
+const { environment } = ENV;
+
+const COUNTDOWN_FROM = 3;
+const DEFAULT_REPEAT = 1;
 
 export default class ExerciseComponent extends Component {
   @arg(object.isRequired) exercise!: Exercise;
@@ -29,9 +41,16 @@ export default class ExerciseComponent extends Component {
   @restartableTask async run() {
     await taskFor(this.countdown).perform();
 
-    let i = 2;
-    while (i--) {
-      await taskFor(this.loop).perform();
+    let isInfinite = this.exercise.repeat === Repeat.Infinite;
+    let loop = () => taskFor(this.loop).perform();
+
+    let i = DEFAULT_REPEAT;
+    while (isInfinite || i--) {
+      await loop();
+
+      if (environment === 'test') {
+        break;
+      }
     }
   }
 
@@ -55,7 +74,7 @@ export default class ExerciseComponent extends Component {
   }
 
   @restartableTask async countdown() {
-    let i = 10;
+    let i = COUNTDOWN_FROM;
 
     while (i--) {
       while (this.paused) {
@@ -81,7 +100,8 @@ export default class ExerciseComponent extends Component {
     return Math.random() * (max - min) + min;
   }
 
-  getRandomActionFromMulti(multiAction: Action) {
-    return multiAction.items[Math.floor(Math.random() * multiAction.items.length)];
+  getRandomActionFromMulti(multiAction: MultiAction): SingleAction {
+    let randomIndex = Math.floor(Math.random() * multiAction.items.length);
+    return multiAction.items[randomIndex];
   }
 }
