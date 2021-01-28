@@ -1,0 +1,32 @@
+{{#if @isRunning}}
+  <button
+    {{on "click" @onPause}}
+    data-test-pause-button
+    type="button"
+    class="
+      py-2 px-4 whitespace-no-wrap
+      rounded-full bg-blue-500 hover:bg-blue-700 text-white font-bold
+    "
+  >
+    {{#if @isPaused}}
+      Resume
+      <FaIcon @icon="play" class="ml-1" />
+    {{else}}
+      Pause
+      <FaIcon @icon="pause" class="ml-1" />
+    {{/if}}
+  </button>
+{{else}}
+  <button
+    {{on "click" @onPlay}}
+    data-test-play-button
+    type="button"
+    class="
+      py-2 px-4 whitespace-no-wrap
+      rounded-full bg-light-blue-vivid-050 text-light-blue-vivid-800 font-bold
+    "
+  >
+    Play
+    <FaIcon @icon="play" class="ml-1" />
+  </button>
+{{/if}}

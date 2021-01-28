@@ -1,0 +1,50 @@
+<div
+  class="
+    {{if this.isHidden "opacity-0" "opacity-25"}}
+    fixed inset-0 bg-black transition-opacity duration-500 ease-in-out
+  "
+></div>
+
+<div
+  class="
+    {{if this.isHidden "opacity-0"}}
+    fixed flex
+    items-center
+    justify-center
+    inset-0 transition-opacity duration-500 ease-in-out
+  "
+  {{did-insert (perform this.hideAfterTimeout)}}
+  {{did-insert this.attachEventListener}}
+  {{will-destroy this.removeEventListener}}
+>
+  <button
+    {{on "click" @onPause}}
+    type="button"
+    class="focus:outline-none"
+  >
+    {{#if @isPaused}}
+      <FaIcon
+        @icon="play-circle"
+        class="text-6xl bg-white rounded-full opacity-75"
+      />
+    {{else}}
+      <FaIcon
+        @icon="pause-circle"
+        class="text-6xl bg-white rounded-full opacity-75"
+      />
+    {{/if}}
+  </button>
+
+  <div class="fixed left-0 top-0">
+    <button
+      {{on "click" @onStop}}
+      type="button"
+      class="m-4 focus:outline-none"
+    >
+      <FaIcon
+        @icon="times-circle"
+        class="text-4xl bg-white rounded-full opacity-75"
+      />
+    </button>
+  </div>
+</div>

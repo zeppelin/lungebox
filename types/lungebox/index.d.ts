@@ -1,3 +1,5 @@
+import 'ember-concurrency-async';
+import 'ember-concurrency-ts/async';
 import Ember from 'ember';
 
 declare global {

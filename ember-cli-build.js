@@ -13,7 +13,11 @@ const purgeCSS = {
       './app/components/**/*.hbs',
       './app/templates/**/*.hbs'
     ],
-    whitelistPatternsChildren: [/(--|__)[\w_-]+$/],
+    whitelistPatternsChildren: [
+      /(--|__)[\w_-]+$/, // Modifier clases
+      /bg-[a-z]+[0-9-]*$/ // BG colors
+    ],
+
     defaultExtractor: content => content.match(/[A-Za-z0-9-_:/]+/g) || []
   }
 };

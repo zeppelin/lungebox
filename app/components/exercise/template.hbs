@@ -1,0 +1,33 @@
+<div class="lg:w-1/2 mx-auto">
+  <div class="flex items-center">
+    <h2 data-test-exercise-title class="my-8 text-2xl text-gray-800">
+      {{this.exercise.title}}
+    </h2>
+
+    <div class="ml-auto">
+      <Exercise::PlayButton
+        @isRunning={{this.run.isRunning}}
+        @isPaused={{this.paused}}
+        @onPlay={{this.play}}
+        @onPause={{this.pause}}
+      />
+    </div>
+  </div>
+
+  <Exercise::Timeline @actions={{this.exercise.actions}} class="mb-4" />
+  <Exercise::Legend @actions={{this.exercise.actions}} />
+
+  {{#if this.run.isRunning}}
+    <Exercise::Action
+      @action={{this.action}}
+      @onDismiss={{cancel-all this.run}}
+    />
+
+    <Exercise::Hud
+      @isRunning={{this.run.isRunning}}
+      @isPaused={{this.paused}}
+      @onPause={{this.pause}}
+      @onStop={{cancel-all this.run}}
+    />
+  {{/if}}
+</div>

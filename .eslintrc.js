@@ -52,6 +52,9 @@ module.exports = {
     // Ex. arg => {...} instead of (arg) => {...}
     'arrow-parens': ['error', 'as-needed', { 'requireForBlockBody': true }],
 
+    // ember-concurrency-async
+    'no-await-in-loop': 'off',
+
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/no-empty-function': 'warn'

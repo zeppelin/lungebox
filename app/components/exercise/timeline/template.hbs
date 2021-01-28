@@ -1,0 +1,19 @@
+<div class="-mx-1 flex items-end" ...attributes>
+  {{#each @actions as |action|}}
+    {{#if (eq action.type "single")}}
+      <div class="flex-1 flex px-1">
+        <div class="bg-{{action.color}}-500 flex-1 h-2 text-white rounded">
+        </div>
+      </div>
+    {{else}}
+      <div class="flex-1 flex flex-col">
+        {{#each action.items as |action|}}
+          <div class="flex-1 flex pt-1 px-1">
+            <div class="bg-{{action.color}}-500 flex-1 h-2 text-white rounded">
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    {{/if}}
+  {{/each}}
+</div>
